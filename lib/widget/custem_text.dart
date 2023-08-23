@@ -10,10 +10,12 @@ class CustemText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: TextStyle(
-          fontSize: fontSize.sp,
-          fontWeight: FontWeight.w800,
-          color: Colors.white),
+        fontSize: fontSize.sp,
+        fontWeight: FontWeight.w800,
+        color: Colors.white,
+      ),
     );
   }
 }

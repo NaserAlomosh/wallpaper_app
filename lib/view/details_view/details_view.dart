@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallpaper_app/classes/save_image/save_image.dart';
@@ -10,12 +8,12 @@ import 'package:wallpaper_app/widget/custem_text.dart';
 
 class DetailsView extends StatefulWidget {
   final String image;
-  final String url;
+  final String titleSaveDb;
 
   const DetailsView({
     super.key,
     required this.image,
-    required this.url,
+    required this.titleSaveDb,
   });
 
   @override
@@ -25,19 +23,10 @@ class DetailsView extends StatefulWidget {
 class _DetailsViewState extends State<DetailsView> {
   List dbData = [];
 
-  bool isFavorite = false;
+  //bool isFavorite = false;
 
   int id = 0;
   _DetailsViewState();
-  // favorite() {
-  //   database.insertToDatabase(widget.image, 'true', widget.url).then((V) {
-  //     database.getAll().then((value) {
-  //       // ignore: avoid_print
-  //       Navigator.pop(context);
-  //       print(value.toString());
-  //     });
-  //   });
-  // }
 
   @override
   void initState() {
@@ -47,7 +36,11 @@ class _DetailsViewState extends State<DetailsView> {
         if (dbData.isNotEmpty) {
           for (var data in dbData) {
             if (data['image'] == widget.image) {
-              isFavorite = true;
+              setState(() {
+                isFavorite = true;
+              });
+            } else {
+              isFavorite = false;
             }
           }
         }
@@ -81,11 +74,10 @@ class _DetailsViewState extends State<DetailsView> {
               CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    forceElevated: true, //* here
-                    elevation: 40, //* question having 0 here
+                    forceElevated: true,
+                    elevation: 40,
                     pinned: true,
                     floating: false,
-
                     shape: const ContinuousRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(60),
@@ -101,8 +93,10 @@ class _DetailsViewState extends State<DetailsView> {
                     title: CustemText(text: AppString.diteals, fontSize: 20.sp),
                     actions: [
                       IconButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            dbData = await database.getAll();
                             setState(() {
+                              dbData;
                               if (isFavorite == true) {
                                 for (var data in dbData) {
                                   if (data['image'] == widget.image) {
@@ -118,8 +112,8 @@ class _DetailsViewState extends State<DetailsView> {
                                 }
                               } else if (isFavorite == false) {
                                 database
-                                    .insertToDatabase(
-                                        widget.image, 'true', 'url')
+                                    .insertToDatabase(widget.image, 'true',
+                                        'true', widget.titleSaveDb)
                                     .then((value) {
                                   if (isFavorite == true) {
                                     setState(() {

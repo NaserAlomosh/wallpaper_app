@@ -15,7 +15,7 @@ class DatabaseHelper {
         log('DATABASE 0');
         // When creating the db, create the table
         await db.execute(
-            'CREATE TABLE Test (id INTEGER PRIMARY KEY, image TEXT, favorite TEXT , url TEXT)');
+            'CREATE TABLE Test (id INTEGER PRIMARY KEY, image TEXT, favorite TEXT , title TEXT)');
         log('DATABASE CREATED');
       },
       onOpen: (db) {
@@ -27,12 +27,12 @@ class DatabaseHelper {
   }
 
   Future<void> insertToDatabase(
-      String? image, String? favorite, String? url) async {
+      String? image, String? favorite, String? title, String string) async {
     //
     await database!.transaction(
       (txn) async {
         await txn.rawInsert(
-            'INSERT INTO Test(image, favorite ,url ) VALUES(?, ? ,?)', [
+            'INSERT INTO Test(image, favorite ,title ) VALUES(?, ? ,?)', [
           image,
           favorite,
         ]).then(
@@ -55,10 +55,10 @@ class DatabaseHelper {
     }
   }
 
-  void updateDatabase({String? image, String? favorite, int? id}) async {
+  void updateDatabase({String? image, String? title, int? id}) async {
     await database!.rawUpdate(
         'UPDATE Test SET image = ?, favorite = ?, WHERE id = ?',
-        [image, favorite, id]);
+        [image, title, id]);
   }
 
   Future<void> deleteDatabaseFromImage({String? image}) async {

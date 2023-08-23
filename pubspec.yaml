@@ -40,6 +40,7 @@ dependencies:
   clickable_list_wheel_view:
   sqflite:
   font_awesome_flutter: 
+  search_page: ^2.3.0
 
   flutter:
   

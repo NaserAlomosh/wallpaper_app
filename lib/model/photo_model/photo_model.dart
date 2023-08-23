@@ -41,38 +41,12 @@ class Src {
   String? alt;
   String? medium;
 
-  Src({this.medium});
+  Src({this.medium, String? alt});
 
   factory Src.fromJson(Map<String, dynamic> json) {
     return Src(
       medium: json['medium'],
+      alt: json['alt'],
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class Photo {
-//   final int id;
-//   final String url;
-//   final String photographer;
-
-//   Photo({required this.id, required this.url, required this.photographer});
-//   factory Photo.fromJson(Map<String, dynamic> jsonData) {
-//     return Photo(
-//       id: jsonData['id'],
-//       url: jsonData['url'],
-//       photographer: jsonData['photographer'],
-//     );
-//   }
-// }
